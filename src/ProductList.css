@@ -47,6 +47,19 @@ body {
     align-items: center;
     justify-content: center;
 }
+.product-grid h1 {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+.product-grid h1 > div {
+    display: inline-block; /* Make the title shrink to its content */
+    font-size: 24px;
+    color: black;
+    padding: 10px 0; /* Add spacing above and below the text */
+    box-shadow: inset 0 2px 0 black, inset 0 -2px 0 black; /* Lines above and below */
+}
+  
 .product-list {
     display: flex;
     flex-wrap: wrap;
