@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
-import { addItem } from './CartSlice';
+import { addItem,removeItem } from './CartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTotalItems } from './CartSlice';
 
@@ -11,12 +11,20 @@ function ProductList() {
     const [addedToCart, setAddedToCart] = useState({});
     const totalItems = useSelector(selectTotalItems);
     const dispatch = useDispatch();
+    
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
         setAddedToCart((prevState) => ({
            ...prevState,
            [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
          }));
+      };
+      const handleRemoveFromCart = (product) => {
+        dispatch(removeItem(product));
+        setAddedToCart((prevState) => ({
+          ...prevState,
+          [product.name]: false,
+        }));
       };
     const plantsArray = [
         {
@@ -294,6 +302,7 @@ const handlePlantsClick = (e) => {
                         <button
                             className={`product-button ${addedToCart[plant.name] ? 'added-to-cart' : ''}`}
                             onClick={() => handleAddToCart(plant)}
+                            disabled={addedToCart[plant.name]}
                         >
                             {addedToCart[plant.name] ? "Added to Cart" : "Add to Cart"}
                         </button>
@@ -304,7 +313,10 @@ const handlePlantsClick = (e) => {
             ))}
         </div>
  ) :  (
-    <CartItem onContinueShopping={handleContinueShopping}/>
+    <CartItem 
+        onContinueShopping={handleContinueShopping}
+        onRemoveItem={handleRemoveFromCart}
+    />
 )}
     </div>
     );
